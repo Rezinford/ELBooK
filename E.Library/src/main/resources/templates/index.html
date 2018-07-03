@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoEl Book</title>
+
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="manifest" href="../static/json/manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content=">RoEl Book">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="RoEl Book">
+
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    </style>
+    <script src="/script/jqueryAjaxGet.js"></script>
+    <script src="/script/main.js"></script>
+    <style src="/css/main.css"></style>
+</head>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!------ Include the above in your HEAD tag ---------->
+<!--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+<!--<nav class="navbar navbar-default navbar-inverse" role="navigation">-->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark ">
+            <a href="#overview" class="mdl-layout__tab is-active">Main</a>
+            <a href="#author" class="mdl-layout__tab">Author</a>
+            <a href="#publisher" class="mdl-layout__tab">Publisher</a>
+            <a href="#category" class="mdl-layout__tab">Category</a>
+            <a href="#book" class="mdl-layout__tab">Book</a>
+            <a href="#features" class="mdl-layout__tab">FAQ</a>
+
+            <form class="navbar-form navbar-left" action="/action_page.php">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Поиск" name="search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><p class="navbar-text">Already have an account?</p></li>-->
+                <a href="#login" class="mdl-layout__tab">Register Now</a>
+                <a href="login_1.html"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+            </ul>
+            <!--<a href="#abmin" class="mdl-layout__tab">Admin</a>-->
+        </div>
+    </header>
+
+
+    <main class="mdl-layout__content">
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel" id="author">
+
+            <section class="section--center form-horizontal">
+                <header class="form-horizontal">
+                    <legend>Author</legend>
+                </header>
+                <div class="container">
+                    <div>
+                        <h2 class="media-heading">О. Генри</h2>
+                    </div>
+                    <!-- Left-aligned media object -->
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="authorimg">
+                                <img class="media-object" src="/images/db/picl_18941.jpg" alt="О. Генри"
+                                     style="width:60px">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut
+                                    labore et
+                                    dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div>
+                        <div class="form-horizontal"></div>
+                        <header class="form-horizontal">
+                            <legend align="center"> Auther</legend>
+                        </header>
+                        <form align="center" class="navbar-form navbar-left" action="/action_page.php">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Поиск" name="search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="container">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th width="100">ID автора</th>
+                                    <th width="200">Имя автора</th>
+                                    <th width="200">Фамилия автора</th>
+                                    <th>Описание</th>
+                                </tr>
+                                </thead>
+                                <tbody th:each="author: ${authors}">
+                                <tr>
+                                    <td th:utext="${author.authorID}">ID</td>
+                                    <td th:utext="${author.authorFirstName}">Name</td>
+                                    <td th:utext="${author.authorLastName}">Surname</td>
+                                    <td th:utext="${author.description}">Description</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p></p>
+                </div>
+            </section>
+
+        </div>
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel" id="publisher">
+            <section class="section--center form-horizontal">
+                <header class="form-horizontal">
+                    <legend>Publisher</legend>
+                </header>
+                <div class="container">
+                    <div>
+                        <h2 class="media-heading">OVERVIEW</h2>
+                    </div>
+                    <!-- Left-aligned media object -->
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="authorimg">
+                                <img class="media-object" src="/images/db/picl_18941.jpg" alt="О. Генри"
+                                     style="width:60px">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut
+                                    labore et
+                                    dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Points</th>
+                                <th>Points</th>
+                                <th>Points</th>
+                            </tr>
+                            <tr>
+                                <td>Jill</td>
+                                <td>Smith</td>
+                                <td>50</td>
+                                <td>50</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>Eve</td>
+                                <td>Jackson</td>
+                                <td>94</td>
+                                <td>94</td>
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>Adam</td>
+                                <td>Johnson</td>
+                                <td>67</td>
+                                <td>67</td>
+                                <td>67</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p></p>
+                </div>
+            </section>
+            <div>
+                <div class="form-horizontal"></div>
+                <header class="form-horizontal">
+                    <legend align="center"> Auther</legend>
+                </header>
+                <form align="center" class="navbar-form navbar-left" action="/action_page.php">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск" name="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="100">ID автора</th>
+                            <th width="200">Имя автора</th>
+                            <th width="200">Фамилия автора</th>
+                            <th>Описание</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="author: ${authors}">
+                        <tr>
+                            <td th:utext="${author.authorID}">ID</td>
+                            <td th:utext="${author.authorFirstName}">Name</td>
+                            <td th:utext="${author.authorLastName}">Surname</td>
+                            <td th:utext="${author.description}">Description</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel" id="category">
+            <section class="section--center form-horizontal">
+                <header class="form-horizontal">
+                    <legend>Category</legend>
+                </header>
+                <div class="container">
+                    <div>
+                        <h2 class="media-heading">Classic</h2>
+                    </div>
+                    <!-- Left-aligned media object -->
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="authorimg">
+                                <img class="media-object" src="/images/db/picl_18941.jpg" alt="О. Генри"
+                                     style="width:60px">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut
+                                    labore et
+                                    dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div style="overflow-x:auto;">
+                        <table>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Points</th>
+                                <th>Points</th>
+                                <th>Points</th>
+                            </tr>
+                            <tr>
+                                <td>Jill</td>
+                                <td>Smith</td>
+                                <td>50</td>
+                                <td>50</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>Eve</td>
+                                <td>Jackson</td>
+                                <td>94</td>
+                                <td>94</td>
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>Adam</td>
+                                <td>Johnson</td>
+                                <td>67</td>
+                                <td>67</td>
+                                <td>67</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <p></p>
+                </div>
+            </section>
+            <div>
+                <div class="form-horizontal"></div>
+                <header class="form-horizontal">
+                    <legend align="center"> Auther</legend>
+                </header>
+                <form align="center" class="navbar-form navbar-left" action="/action_page.php">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск" name="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="100">ID автора</th>
+                            <th width="200">Имя автора</th>
+                            <th width="200">Фамилия автора</th>
+                            <th>Описание</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="author: ${authors}">
+                        <tr>
+                            <td th:utext="${author.authorID}">ID</td>
+                            <td th:utext="${author.authorFirstName}">Name</td>
+                            <td th:utext="${author.authorLastName}">Surname</td>
+                            <td th:utext="${author.description}">Description</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel" id="book">
+            <section class="section--center form-horizontal">
+                <header class="form-horizontal">
+                    <legend>Book</legend>
+                </header>
+                <div class="container">
+                    <div>
+                        <h2 class="media-heading">War</h2>
+                    </div>
+                    <!-- Left-aligned media object -->
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="authorimg">
+                                <img class="media-object" src="/images/db/picl_18941.jpg" alt="О. Генри"
+                                     style="width:60px">
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut
+                                    labore et
+                                    dolore magna aliqua.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+
+                </div>
+                <div class="media-body">
+                    <p></p>
+                </div>
+            </section>
+            <div>
+                <div class="form-horizontal"></div>
+                <header class="form-horizontal">
+                    <legend align="center"> Auther</legend>
+                </header>
+                <form align="center" class="navbar-form navbar-left" action="/action_page.php">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск" name="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="100">ID автора</th>
+                            <th width="200">Имя автора</th>
+                            <th width="200">Фамилия автора</th>
+                            <th>Описание</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="author: ${authors}">
+                        <tr>
+                            <td th:utext="${author.authorID}">ID</td>
+                            <td th:utext="${author.authorFirstName}">Name</td>
+                            <td th:utext="${author.authorLastName}">Surname</td>
+                            <td th:utext="${author.description}">Description</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel is-active" id="overview">
+            <section class="section--center mdl-grid mdl-grid&#mdl-grid45 no-spacing mdl-shadow--2dp">
+                <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
+                    <i class="material-icons">play_circle_filled</i>
+                </header>
+                <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <h5>Lorem ipsum dolor sit amet</h5>
+                    Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et
+                    pariatur ex.
+                </div>
+            </section>
+        </div>
+        <!-- ------------------------   -->
+        <div class="mdl-layout__tab-panel" id="features">
+            <section class="section--center form-horizontal">
+                <div class="form-group">
+                    <h4> Features</h4>
+                    Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat.
+                    Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+                    <ul class="toc">
+                        <h4>Contents</h4>
+                        <a href="#lorem1">Lorem ipsum</a>
+                        <a href="#lorem2">Lorem ipsum</a>
+                    </ul>
+
+                    <h5 id="lorem1">Lorem ipsum dolor sit amet</h5>
+                    Excepteur et pariatur officia veniam anim culpa cupidatat consequat ad velit culpa est non.
+                    <ul>
+                        <li>Nisi qui nisi duis commodo duis reprehenderit consequat velit aliquip.</li>
+                        <li>Dolor consectetur incididunt in ipsum laborum non et irure pariatur excepteur anim
+                            occaecat
+                            officia sint.
+                        </li>
+                        <li>Lorem labore proident officia excepteur do.</li>
+                    </ul>
+
+                </div>
+            </section>
+        </div>
+        <!-- ------------------------   -->
+        <!--<form class="form" role="form" method="post" action="login"accept-charset="UTF-8" id="login-nav">-->
+        <!--<header>-->
+        <div class="mdl-layout__tab-panel" id="login">
+            <form action="#" th:action="@{/user/create}"
+                  th:object="${user}" method="post" class="m-t" role="form" accept-charset="UTF-8">
+                <header class="form-horizontal">
+                    <legend>Register</legend>
+                </header>
+                <section class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">First name</label>
+                        <div class="col-md-4">
+                            <input th:field="*{first_name}" id="textinput" name="first_name" type="text"
+                                   placeholder="John"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Last name</label>
+                        <div class="col-md-4">
+                            <input th:field="*{last_name}" id="textinput" name="last_name" type="text"
+                                   placeholder="Smith"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="email">E-mail</label>
+                        <div class="col-md-4">
+                            <input th:field="*{e_mail}" id="email" name="email" type="text"
+                                   placeholder="john.smith@mail.com" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="passwordinput">Password</label>
+                        <div class="col-md-4">
+                            <input th:field="*{password}" id="passwordinput" name="passwordinput"
+                                   type="password"
+                                   placeholder="Enter your password" class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="passwordinput">Repeat password </label>
+                        <div class="col-md-4">
+                            <input th:field="*{repeat_password}" id="Repeat_passwordinput"
+                                   name="Repeat_passwordinput"
+                                   type="password" placeholder="Repeat your password"
+                                   class="form-control input-md"
+                                   required="">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="passwordinput">Age</label>
+                        <div class="col-md-4">
+                            <input th:field="*{age}" id="age" name="age" type="age" placeholder="age"
+                                   class="form-control input-md" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Register
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <!--</div>-->
+            </form>
+        </div>
+        <!-- ------------------------   -->
+        <!--<div class="mdl-layout__tab-panel" id="login_Form">-->
+        <!--<form action="#" th:action="@{/user/login}"-->
+        <!--th:object="${user}" method="post" class="m-t" role="form" accept-charset="UTF-8">-->
+        <!--<header class="form-horizontal">-->
+        <!--<legend>User Form</legend>-->
+        <!--</header>-->
+        <!--<section class="form-horizontal">-->
+
+        <!--<div class="form-group">-->
+        <!--<label class="col-md-4 control-label" for="email">E-mail</label>-->
+        <!--<div class="col-md-4">-->
+        <!--<input th:field="*{e_mail}" id="email" name="E-mail" type="text"-->
+        <!--placeholder="john.smith@mail.com" class="form-control input-md" required="">-->
+
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+        <!--<label class="col-md-4 control-label" for="passwordinput">Password</label>-->
+        <!--<div class="col-md-4">-->
+        <!--<input th:field="*{password}" id="passwordinput" name="Password"-->
+        <!--type="password"-->
+        <!--placeholder="Enter your password" class="form-control input-md" required="">-->
+
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<div class="col-md-4 control-label">-->
+        <!--<div class="checkbox">-->
+        <!--<label><input type="checkbox"> Remember me</label>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <!--<label class="col-md-4 control-label" for="singlebutton"></label>-->
+        <!--<div class="col-md-4">-->
+        <!--<button id="singlebutton" name="singlebutton" class="btn btn-primary">Sign in-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</section>-->
+        <!--</form>-->
+        <!--</div>-->
+        <!-- ------------------------   -->
+
+        <!-- ------------------------   -->
+
+        <footer id="myFooter">
+            <link rel="stylesheet"
+                  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <link rel="stylesheet" href="assets/css/Footer-with-button-logo.css">
+            <script>
+                $(function () {
+                    var iframe = $('.main-content iframe')[0],
+                        menu_links = $('.items li a'),
+                        selected_link,
+                        href;
+
+
+                    $(window).on('hashchange', function () {
+
+                        if (window.location.hash) {
+                            href = window.location.hash.substring(1);
+                            selected_link = $('a[href$="' + href + '"]');
+
+                            // Check if the hash is valid - it should exist as one of the menu items.
+                            if (selected_link.length) {
+                                iframe.contentWindow.location.replace(href + '.html');
+
+                                menu_links.removeClass('active');
+                                selected_link.addClass('active');
+                            }
+                        }
+                        else {
+                            iframe.contentWindow.location.replace('Footer-with-logo.html');
+                            menu_links.removeClass('active');
+                            $(menu_links[0]).addClass('active');
+                        }
+
+                    });
+
+
+                    if (window.location.hash) {
+                        $(window).trigger('hashchange');
+                    }
+
+
+                    menu_links.on('click', function (e) {
+                        e.preventDefault();
+
+                        window.location.hash = $(this).attr('href');
+                    });
+
+
+                    $('#template-select').on('change', function (e) {
+                        e.preventDefault();
+
+                        window.location.hash = $(this).find(':selected').data('href');
+                    });
+
+                });
+            </script>
+            <style>
+                #myFooter {
+                    background-color: #3c3d41;
+                    color: white;
+                    padding-top: 30px;
+                }
+
+                #myFooter .footer-copyright {
+                    background-color: #333333;
+                    padding-top: 3px;
+                    padding-bottom: 3px;
+                    text-align: center;
+                }
+
+                #myFooter .row {
+                    margin-bottom: 60px;
+                }
+
+                #myFooter .navbar-brand {
+                    margin-top: 45px;
+                    height: 65px;
+                }
+
+                #myFooter .footer-copyright p {
+                    margin: 10px;
+                    color: #ccc;
+                }
+
+                #myFooter ul {
+                    list-style-type: none;
+                    padding-left: 0;
+                    line-height: 1.7;
+                }
+
+                #myFooter h5 {
+                    font-size: 18px;
+                    color: white;
+                    font-weight: bold;
+                    margin-top: 30px;
+                }
+
+                #myFooter h2 a {
+                    font-size: 50px;
+                    text-align: center;
+                    color: #fff;
+                }
+
+                #myFooter a {
+                    color: #d2d1d1;
+                    text-decoration: none;
+                }
+
+                #myFooter a:hover,
+                #myFooter a:focus {
+                    text-decoration: none;
+                    color: white;
+                }
+
+                #myFooter .social-networks {
+                    text-align: center;
+                    padding-top: 30px;
+                    padding-bottom: 16px;
+                }
+
+                #myFooter .social-networks a {
+                    font-size: 32px;
+                    color: #f9f9f9;
+                    padding: 10px;
+                    transition: 0.2s;
+                }
+
+                #myFooter .social-networks a:hover {
+                    text-decoration: none;
+                }
+
+                #myFooter .facebook:hover {
+                    color: #0077e2;
+                }
+
+                #myFooter .google:hover {
+                    color: #ef1a1a;
+                }
+
+                #myFooter .twitter:hover {
+                    color: #00aced;
+                }
+
+                #myFooter .btn {
+                    color: white;
+                    background-color: #d84b6b;
+                    border-radius: 20px;
+                    border: none;
+                    width: 150px;
+                    display: block;
+                    margin: 0 auto;
+                    margin-top: 10px;
+                    line-height: 25px;
+                }
+
+                @media screen and (max-width: 767px) {
+                    #myFooter {
+                        text-align: center;
+                    }
+                }
+
+                /* CSS used for positioning the footers at the bottom of the page. */
+                /* You can remove this. */
+
+                html {
+                    height: 100%;
+                }
+
+                body {
+                    display: flex;
+                    display: -webkit-flex;
+                    flex-direction: column;
+                    -webkit-flex-direction: column;
+                    height: 100%;
+                }
+
+                .content {
+                    flex: 1 0 auto;
+                    -webkit-flex: 1 0 auto;
+                    min-height: 200px;
+                }
+
+                #myFooter {
+                    flex: 0 0 auto;
+                    -webkit-flex: 0 0 auto;
+                }
+            </style>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h2 class="logo"><a href="#"> RoEl Book </a></h2>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5>Get started</h5>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Sign up</a></li>
+                            <li><a href="#">Downloads</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5>About us</h5>
+                        <ul>
+                            <li><a href="#">Company Information</a></li>
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">Reviews</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <h5>Support</h5>
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Help desk</a></li>
+                            <li><a href="#">Forums</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="social-networks">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                        </div>
+                        <button type="button" class="btn btn-default">Contact us</button>
+                    </div>
+                </div>
+                <!--<div class="col-sm-3">-->
+                <!--<a href="#"><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</a>-->
+                <!--</div>-->
+                <!--<div class="col-sm-3">-->
+                <!--<a href="#"><span class="glyphicon glyphicon-phone"></span> +00 1515151515</a>-->
+                <!--</div>-->
+                <!--<div class="col-sm-3">-->
+                <!--<a href="#"><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</a>-->
+                <!--</div>-->
+            </div>
+            <div class="footer-copyright">
+                <p>© 2018 Copyright Text</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <!-- build:js scripts/main.min.js -->
+    <script src="../static/script/main.js"></script>
+    <!-- endbuild -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-XXXXX-X', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- Built with love using Web Starter Kit -->
+</div>
+</body>
+</html>
